@@ -1,4 +1,3 @@
 node_modules,
-src/database/database.db-wal
-
+src/database/database.db-wal,
 src/database/database.db-shm
