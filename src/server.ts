@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express"
 import { knex } from "./database/knex"
 import { request } from "http"
+import Module from "module"
 
 const app = express()
 app.use(express.json())
@@ -52,10 +53,32 @@ app.post("/modules", async (request: Request, response: Response) => {
   return response.status(201).json()
 })
 
-  app.get("/modules", async (request: Request, response: Response) => {
-    const modules = await knex("course_modules").select()
+app.get("/modules", async (request: Request, response: Response) => {
+  const modules = await knex("course_modules").select()
 
-    return response.json(modules)
-  })
+  return response.json(modules)
+})
+
+app.get("/courses/:id/modules", async (request: Request, response: Response) => {
+
+  const courses = await knex("courses")
+    .select(
+      "courses.id AS course_id",
+      "course_modules.id AS module_id", 
+      "course_modules.name as module",
+      "courses.name AS course"
+    )
+    .join("course_modules", "courses.id", "course_modules.course_id") //Here we do a JOIN with the PK and FK
+  
+  return response.json(courses)
+
+  // const { id } = request.params
+
+  // const modules = await knex("course_modules")
+  //   .select("course_modules.id", "course_modules.name as module")
+  //   .where("course_id", id)
+
+  // return response.json(modules)
+})
 
 app.listen(3333, () => console.log(`Server is running on port 3333`))
