@@ -1,3 +1,4 @@
 node_modules,
-database.db-wal,
-database.db-shm,
+src/database/database.db-wal
+
+src/database/database.db-shm
