@@ -1,3 +1,5 @@
+//Setting up all the knex config
+
 export default {
   client: "sqlite3",
   connection: {
