@@ -5,6 +5,13 @@ export default {
   connection: {
     filename: "./src/database/database.db"
   },
+  //Setting to prevent sqlite from creating an item with no reference of FK
+  pool: {
+    afterCreate: (connection: any, done: any) => {
+      connection.run("PRAGMA foreign_keys = ON")
+      done()
+    }
+  },
   userNullAsDefault: true,
   migrations: {
     extensions: "ts",
