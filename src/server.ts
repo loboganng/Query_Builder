@@ -12,7 +12,11 @@ app.post("/courses", async (request: Request, response: Response) => {
   const { name } = request.body
 
   //Here we're able to insert data into the database, using knex
-  await knex("courses").insert({ name })
+  // await knex("courses").insert({ name })
+
+  //Now we'll utilise the raw method to input actual SQL code into our program
+  //This can also be used for any other method
+  await knex.raw("INSERT INTO courses (name) VALUES (?)", [name])
 
   response.status(201).json()
 })
